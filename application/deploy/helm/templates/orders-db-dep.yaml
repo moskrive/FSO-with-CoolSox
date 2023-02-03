@@ -1,0 +1,53 @@
+{{- if .Values.orders_db.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-db
+  labels:
+    name: orders-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orders-db
+  template:
+    metadata:
+      labels:
+        name: orders-db
+    spec:
+      containers:
+      - name: orders-db
+        image: mongo:5.0.11
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        ports:
+        - name: mongo
+          containerPort: 27017
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: {{ .Values.kubernetes.readOnlyRootFilesystem }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+        {{- if .Values.appdynamics.enabled }}
+        - name: mongodb-init-config
+          mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+          subPath: mongo-init.js
+          readOnly: true
+        {{- end }}
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+        {{- if .Values.appdynamics.enabled }}
+        - name: mongodb-init-config
+          configMap:
+            name: mongodb-init-config
+        {{- end }}
+{{- end }}

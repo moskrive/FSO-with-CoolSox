@@ -1,0 +1,35 @@
+{{- if .Values.catalogue_db.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue-db
+  labels:
+    name: catalogue-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: catalogue-db
+  template:
+    metadata:
+      labels:
+        name: catalogue-db
+    spec:
+      containers:
+      - name: catalogue-db
+        {{- if .Values.catalogue_db.version }}
+        image: coolsoxlab/fso-with-coolsox:catalogue-db-{{.Values.catalogue_db.version}}
+        {{- else }}
+        image: coolsoxlab/fso-with-coolsox:catalogue-db
+        {{- end}}
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: fake_password
+          - name: MYSQL_DATABASE
+            value: socksdb
+        ports:
+        - name: mysql
+          containerPort: 3306
+{{- end }}

@@ -1,0 +1,53 @@
+{{- if .Values.carts_db.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carts-db
+  labels:
+    name: carts-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: carts-db
+  template:
+    metadata:
+      labels:
+        name: carts-db
+    spec:
+      containers:
+      - name: carts-db
+        image: mongo:5.0.11
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        ports:
+        - name: mongo
+          containerPort: 27017
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: {{ .Values.kubernetes.readOnlyRootFilesystem }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+        {{- if .Values.appdynamics.enabled }}
+        - name: mongodb-init-config
+          mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+          subPath: mongo-init.js
+          readOnly: true
+        {{- end }}
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+        {{- if .Values.appdynamics.enabled }}
+        - name: mongodb-init-config
+          configMap:
+            name: mongodb-init-config
+        {{- end }}
+{{- end }}

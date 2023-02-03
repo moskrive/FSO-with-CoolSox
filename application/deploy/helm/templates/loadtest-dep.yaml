@@ -1,0 +1,28 @@
+{{- if .Values.loadtest.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-test
+  labels:
+    name: load-test
+spec:
+  replicas: {{ .Values.loadtest.replicas }}
+  selector:
+    matchLabels:
+      name: load-test
+  template:
+    metadata:
+      labels:
+        name: load-test
+    spec:
+      containers:
+      - name: load-test
+        {{- if .Values.loadtest.version }}
+        image: coolsoxlab/fso-with-coolsox:load-test-{{.Values.loadtest.version}}
+        {{- else }}
+        image: coolsoxlab/fso-with-coolsox:load-test
+        {{- end }}
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do locust --host http://front-end -f /config/locustfile.py --users 5 --hatch-rate 5 --headless; done"]
+{{- end }}

@@ -1,0 +1,6 @@
+# docker/catalogue/
+__pycache__/
+vendor/**
+!vendor/manifest
+coverage.out
+docker/catalogue/images/*

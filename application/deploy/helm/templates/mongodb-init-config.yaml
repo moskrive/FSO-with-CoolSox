@@ -1,0 +1,15 @@
+{{- if .Values.appdynamics.enabled }}
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: mongodb-init-config
+data:
+  mongo-init.js: |+
+    db = db.getSiblingDB('admin');
+    db.createUser({ user: '{{ .Values.appdynamics.mongodb_user}}', pwd: '{{ .Values.appdynamics.mongodb_password}}',
+        roles: [
+        { role: 'read', db: 'admin' },
+        { role: 'clusterMonitor', db: 'admin' },
+        ]
+    })
+{{- end }}

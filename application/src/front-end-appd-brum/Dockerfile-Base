@@ -1,0 +1,18 @@
+FROM __IMAGE__-__VERSION__
+
+USER root
+
+# Replace HTML files with files that has AppDynamics BRUM injected into them
+COPY files/public/. public/
+RUN chown -R myuser:mygroup /usr/src/app/public
+
+# Copy custom start script
+COPY files/start_script.sh /usr/src/app/scripts
+RUN chown -R myuser:mygroup /usr/src/app/scripts/start_script.sh && chmod +x /usr/src/app/scripts/start_script.sh
+
+
+USER myuser
+
+# Start the app
+# CMD ["/bin/bash", "/usr/src/app/scripts/start_script.sh"]
+ENTRYPOINT ["/usr/src/app/scripts/start_script.sh"]

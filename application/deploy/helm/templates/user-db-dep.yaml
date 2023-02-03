@@ -1,0 +1,57 @@
+{{- if .Values.user_db.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-db
+  labels:
+    name: user-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: user-db
+  template:
+    metadata:
+      labels:
+        name: user-db
+    spec:
+      containers:
+      - name: user-db
+        {{- if .Values.user_db.version }}
+        image: coolsoxlab/fso-with-coolsox:user-db-{{.Values.user_db.version}}
+        {{- else }}
+        image: coolsoxlab/fso-with-coolsox:user-db
+        {{- end}}
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        ports:
+        - name: mongo
+          containerPort: 27017
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: {{ .Values.kubernetes.readOnlyRootFilesystem }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+        {{- if .Values.appdynamics.enabled }}
+        - name: mongodb-init-config
+          mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+          subPath: mongo-init.js
+          readOnly: true
+        {{- end }}
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+        {{- if .Values.appdynamics.enabled }}
+        - name: mongodb-init-config
+          configMap:
+            name: mongodb-init-config
+        {{- end }}
+{{- end }}

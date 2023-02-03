@@ -1,0 +1,48 @@
+# AppDynamics controller info
+controllerInfo:
+  url: https://<appd controller URL>:443
+  account: AppD Account          # This is the account name and not global account name
+  username: AppD Username        # Required only for auto-instrumentation
+  password: AppD Password        # Required only for auto-instrumentation
+  accessKey: AppD Access Key
+
+# Cluster agent config
+clusterAgent:
+  nsToMonitor:
+    - coolsox
+
+#
+# Auto-instrumentation Config
+#
+# Update the AppName Prior to deploying to match your controller and configuration
+#
+# This example the application name is called "coolsox"
+#
+instrumentationConfig:
+  enabled: true
+  instrumentationMethod: Env
+  nsToInstrumentRegex: coolsox
+  defaultAppName: coolsox
+  instrumentationRules:
+    - namespaceRegex: coolsox
+      appName: coolsox
+      language: nodejs
+      labelMatch:
+        - framework: nodejs
+      imageInfo:
+          image: "docker.io/appdynamics/nodejs-agent:21.8.0-16-stretch-slim"
+          agentMountPath: /opt/appdynamics
+          imagePullPolicy: Always
+    - namespaceRegex: coolsox
+      appName: coolsox
+      language: java
+      labelMatch:
+        - framework: java
+      imageInfo:
+          image: "docker.io/appdynamics/java-agent:21.8.0"
+          agentMountPath: /opt/appdynamics
+          imagePullPolicy: Always
+
+# Install kubernetes metrics-server
+install:
+  metrics-server: false

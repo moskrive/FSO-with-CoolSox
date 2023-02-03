@@ -1,0 +1,53 @@
+{{- if .Values.queue_master.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-master
+  labels:
+    name: queue-master
+    framework: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: queue-master
+  template:
+    metadata:
+      labels:
+        name: queue-master
+        framework: java
+    spec:
+      containers:
+      - name: queue-master
+        {{- if .Values.queue_master.version }}
+        image: coolsoxlab/fso-with-coolsox:queue-master-{{.Values.queue_master.version}}
+        {{- else }}
+        image: coolsoxlab/fso-with-coolsox:queue-master
+        {{- end}}
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        env:
+         - name: JAVA_OPTS
+           value: {{ .Values.java.options }}
+        resources:
+          limits:
+            cpu: 300m
+            memory: 1000Mi
+          requests:
+            cpu: 300m
+            memory: 1000Mi
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 900
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
+{{- end }}

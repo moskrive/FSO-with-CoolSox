@@ -1,0 +1,104 @@
+# Generic settings controlling kubernetes image poll policy and java environment
+kubernetes:
+    imagePullPolicy: IfNotPresent
+    readOnlyRootFilesystem: false
+java:
+    options: -Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+
+# Carts settings
+carts:
+    enabled: true
+    version: 1.0.0
+# Carts-db settings
+carts_db:
+    enabled: true
+# Catalogue-db settings
+catalogue_db:
+    enabled: true
+    version: 1.0.0
+# Catalogue settings
+catalogue:
+    enabled: true
+    version: 1.0.0
+# Front-end settings
+frontend:
+    enabled: true
+    version: 1.0.0
+    replicas: 1
+    appd_browser_rum_enabled: false
+    # BUM Variables - note that / characters must be escaped using \/
+    AppD_appKey: <App Key>
+    AppD_adrumExtUrlHttp: http:\/\/cdn.appdynamics.com
+    AppD_adrumExtUrlHttps: https:\/\/cdn.appdynamics.com
+    AppD_beaconUrlHttp: http:\/\/fra-col.eum-appdynamics.com
+    AppD_beaconUrlHttps: https:\/\/fra-col.eum-appdynamics.com
+    AppD_adrumLocation: cdn.appdynamics.com\/adrum\/adrum-21.4.0.3405.js
+# Orders settings
+orders:
+    enabled: true
+    version: 1.0.0
+# Orders-db settings
+orders_db:
+    enabled: true
+# Payment settings
+payment:
+    enabled: true
+    version: 1.0.0
+# Queue-master settings
+queue_master:
+    enabled: true
+    version: 1.0.0
+# Rabbitmq settings
+rabbitmq:
+    enabled: true
+# Session-db settings
+session_db:
+    enabled: true
+# Shipping settings
+shipping:
+    enabled: true
+    version: 1.0.0
+# User-db settings
+user_db:
+    enabled: true
+    version: 1.0.0
+# User settings
+user:
+    enabled: true
+    version: 1.0.0
+
+# Controls the deployment of kubernets ingress controller for front-end
+ingress:
+    enabled: false
+
+# Controls the deployment of kubernetes loadbalancer for front-end
+loadbalancer:
+    enabled: true
+
+# Controlls the deployment of Calisti Istio Gateway
+calisti_istio_gateway:
+    enabled: false
+
+# Controls the deployment of build-in load-test
+loadtest:
+    version: 1.0.0
+    replicas: 1
+    enabled: false
+
+# Controls the deployment of AppDynamics DB Agent
+appdynamics:
+    enabled: false
+    controller_host: <APPD Controller URL>
+    controller_port: 443
+    account_name: <AppD Account Name>
+    account_access_key: <AppD Access Key>
+    dbagent_name: <AppD DB Agent Name>
+    dbagent_version: 21.9.0.2521
+    mongodb_user: <MongoDB Username>
+    mongodb_password: <MongoDB Password>
+
+# Controls the deployment of ThousandEyes Agent
+te_agent:
+    enabled: false
+    account_token: <ThousandEyes Account Tokenn>
+    agent_name: <ThousandEyes Agent Name>

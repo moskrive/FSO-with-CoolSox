@@ -1,0 +1,82 @@
+{{- if .Values.frontend.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+  labels:
+    name: front-end
+    framework: nodejs
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      name: front-end
+  template:
+    metadata:
+      labels:
+        name: front-end
+        framework: nodejs
+    spec:
+      containers:
+      - name: front-end
+        {{- if .Values.frontend.version }}
+        {{- if .Values.frontend.appd_browser_rum_enabled }}
+        image: coolsoxlab/fso-with-coolsox:front-end-appd-brum-{{.Values.frontend.version}}
+        {{- else}}
+        image: coolsoxlab/fso-with-coolsox:front-end-{{.Values.frontend.version}}
+        {{- end }}
+        {{- else}}
+        {{- if .Values.frontend.appd_browser_rum_enabled }}
+        image: coolsoxlab/fso-with-coolsox:front-end-appd-brum
+        {{- else}}
+        image: coolsoxlab/fso-with-coolsox:front-end
+        {{- end }}
+        {{- end }}
+        imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
+        resources:
+          limits:
+            cpu: 300m
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 300Mi
+        ports:
+        - containerPort: 8079
+        env:
+        - name: SESSION_REDIS
+          value: "true"
+        {{- if .Values.frontend.appd_browser_rum_enabled }}
+        - name: AppD_appKey
+          value: {{ .Values.frontend.AppD_appKey}}
+        - name: AppD_adrumExtUrlHttp
+          value: {{ .Values.frontend.AppD_adrumExtUrlHttp}}
+        - name: AppD_adrumExtUrlHttps
+          value: {{ .Values.frontend.AppD_adrumExtUrlHttps}}
+        - name: AppD_beaconUrlHttp
+          value: {{ .Values.frontend.AppD_beaconUrlHttp}}
+        - name: AppD_beaconUrlHttps
+          value: {{ .Values.frontend.AppD_beaconUrlHttps}}
+        - name: AppD_adrumLocation
+          value: {{ .Values.frontend.AppD_adrumLocation}}
+        {{- end }}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+          readOnlyRootFilesystem: {{ .Values.kubernetes.readOnlyRootFilesystem }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8079
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8079
+          initialDelaySeconds: 30
+          periodSeconds: 3
+{{- end }}

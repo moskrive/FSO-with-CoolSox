@@ -1,0 +1,9 @@
+{{- if .Values.te_agent.enabled }}
+apiVersion: v1
+type: Opaque
+data:
+  TEAGENT_ACCOUNT_TOKEN: "{{- .Values.te_agent.account_token | b64enc }}"
+kind: Secret
+metadata:
+  name: te-credentials
+{{- end }}

@@ -1,0 +1,14 @@
+{{- if .Values.loadbalancer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8079
+  selector:
+    name: front-end
+{{- end }}
