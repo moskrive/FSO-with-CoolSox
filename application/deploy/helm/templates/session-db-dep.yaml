@@ -32,4 +32,8 @@ spec:
               - SETGID
               - SETUID
           readOnlyRootFilesystem: {{ .Values.kubernetes.readOnlyRootFilesystem }}
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}

@@ -50,4 +50,8 @@ spec:
             port: 80
           initialDelaySeconds: 180
           periodSeconds: 3
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}

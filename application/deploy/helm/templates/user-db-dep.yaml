@@ -54,4 +54,8 @@ spec:
           configMap:
             name: mongodb-init-config
         {{- end }}
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}

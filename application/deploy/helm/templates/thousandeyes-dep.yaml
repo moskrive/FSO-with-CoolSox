@@ -42,4 +42,8 @@ spec:
              requests:
                memory: 2000Mi
       restartPolicy: Always
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}

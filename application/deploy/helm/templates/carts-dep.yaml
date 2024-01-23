@@ -66,4 +66,8 @@ spec:
         - name: tmp-volume
           emptyDir:
             medium: Memory
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}

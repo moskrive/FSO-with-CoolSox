@@ -32,4 +32,8 @@ spec:
         ports:
         - name: mysql
           containerPort: 3306
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}

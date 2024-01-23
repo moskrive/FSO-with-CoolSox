@@ -25,4 +25,8 @@ spec:
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         command: ["/bin/sh"]
         args: ["-c", "while true; do locust --host http://front-end -f /config/locustfile.py --users 5 --hatch-rate 5 --headless; done"]
+      {{- if .Values.kubernetes.useImageCredentials}}
+      imagePullSecrets:
+        - name: container-registry-secret
+      {{- end }}
 {{- end }}
