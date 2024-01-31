@@ -30,7 +30,7 @@ instrumentationConfig:
       labelMatch:
         - framework: nodejs
       imageInfo:
-          image: "docker.io/appdynamics/nodejs-agent:21.8.0-16-stretch-slim"
+          image: "docker.io/appdynamics/nodejs-agent:23.10.0-14-slim"
           agentMountPath: /opt/appdynamics
           imagePullPolicy: Always
     - namespaceRegex: coolsox
@@ -39,7 +39,7 @@ instrumentationConfig:
       labelMatch:
         - framework: java
       imageInfo:
-          image: "docker.io/appdynamics/java-agent:21.8.0"
+          image: "docker.io/appdynamics/java-agent:24.1.0"
           agentMountPath: /opt/appdynamics
           imagePullPolicy: Always
 
