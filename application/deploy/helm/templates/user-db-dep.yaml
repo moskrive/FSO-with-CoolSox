@@ -19,9 +19,9 @@ spec:
       containers:
       - name: user-db
         {{- if .Values.user_db.version }}
-        image: coolsoxlab/fso-with-coolsox:user-db-{{.Values.user_db.version}}
+        image: pcharpen/fso-with-coolsox:user-db-{{.Values.user_db.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:user-db
+        image: pcharpen/fso-with-coolsox:user-db
         {{- end}}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         ports:

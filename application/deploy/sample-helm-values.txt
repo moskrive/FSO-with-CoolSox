@@ -14,22 +14,22 @@ java:
 # Carts settings
 carts:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # Carts-db settings
 carts_db:
     enabled: true
 # Catalogue-db settings
 catalogue_db:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # Catalogue settings
 catalogue:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # Front-end settings
 frontend:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
     replicas: 1
     appd_browser_rum_enabled: false
     # BUM Variables - note that / characters must be escaped using \/
@@ -42,18 +42,18 @@ frontend:
 # Orders settings
 orders:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # Orders-db settings
 orders_db:
     enabled: true
 # Payment settings
 payment:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # Queue-master settings
 queue_master:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # Rabbitmq settings
 rabbitmq:
     enabled: true
@@ -63,15 +63,15 @@ session_db:
 # Shipping settings
 shipping:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # User-db settings
 user_db:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 # User settings
 user:
     enabled: true
-    version: 1.0.0
+    version: 4.0.0
 
 # Controls the deployment of kubernets ingress controller for front-end
 ingress:
@@ -87,7 +87,7 @@ calisti_istio_gateway:
 
 # Controls the deployment of build-in load-test
 loadtest:
-    version: 1.0.0
+    version: 4.0.0
     replicas: 1
     enabled: false
 

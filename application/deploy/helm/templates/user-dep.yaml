@@ -21,9 +21,9 @@ spec:
       containers:
       - name: user
         {{- if .Values.user.version }}
-        image: coolsoxlab/fso-with-coolsox:user-{{.Values.user.version}}
+        image: pcharpen/fso-with-coolsox:user-{{.Values.user.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:user
+        image: pcharpen/fso-with-coolsox:user
         {{- end }}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         resources:

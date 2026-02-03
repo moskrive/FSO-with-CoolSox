@@ -21,9 +21,9 @@ spec:
       containers:
       - name: carts
         {{- if .Values.carts.version }}
-        image: coolsoxlab/fso-with-coolsox:carts-{{.Values.carts.version}}
+        image: pcharpen/fso-with-coolsox:carts-{{.Values.carts.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:carts
+        image: pcharpen/fso-with-coolsox:carts
         {{- end}}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         env:

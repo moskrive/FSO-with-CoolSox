@@ -22,15 +22,15 @@ spec:
       - name: front-end
         {{- if .Values.frontend.version }}
         {{- if .Values.frontend.appd_browser_rum_enabled }}
-        image: coolsoxlab/fso-with-coolsox:front-end-appd-brum-{{.Values.frontend.version}}
+        image: pcharpen/fso-with-coolsox:front-end-appd-brum-{{.Values.frontend.version}}
         {{- else}}
-        image: coolsoxlab/fso-with-coolsox:front-end-{{.Values.frontend.version}}
+        image: pcharpen/fso-with-coolsox:front-end-{{.Values.frontend.version}}
         {{- end }}
         {{- else}}
         {{- if .Values.frontend.appd_browser_rum_enabled }}
-        image: coolsoxlab/fso-with-coolsox:front-end-appd-brum
+        image: pcharpen/fso-with-coolsox:front-end-appd-brum
         {{- else}}
-        image: coolsoxlab/fso-with-coolsox:front-end
+        image: pcharpen/fso-with-coolsox:front-end
         {{- end }}
         {{- end }}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}

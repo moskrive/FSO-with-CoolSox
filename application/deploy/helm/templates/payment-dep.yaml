@@ -21,9 +21,9 @@ spec:
       containers:
       - name: payment
         {{- if .Values.payment.version }}
-        image: coolsoxlab/fso-with-coolsox:payment-{{.Values.payment.version}}
+        image: pcharpen/fso-with-coolsox:payment-{{.Values.payment.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:payment
+        image: pcharpen/fso-with-coolsox:payment
         {{- end }}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         resources:

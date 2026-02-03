@@ -19,9 +19,9 @@ spec:
       containers:
       - name: catalogue-db
         {{- if .Values.catalogue_db.version }}
-        image: coolsoxlab/fso-with-coolsox:catalogue-db-{{.Values.catalogue_db.version}}
+        image: pcharpen/fso-with-coolsox:catalogue-db-{{.Values.catalogue_db.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:catalogue-db
+        image: pcharpen/fso-with-coolsox:catalogue-db
         {{- end}}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         env:

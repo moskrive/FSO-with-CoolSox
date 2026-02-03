@@ -21,9 +21,9 @@ spec:
       containers:
       - name: catalogue
         {{- if .Values.catalogue.version }}
-        image: coolsoxlab/fso-with-coolsox:catalogue-{{.Values.catalogue.version}}
+        image: pcharpen/fso-with-coolsox:catalogue-{{.Values.catalogue.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:catalogue
+        image: pcharpen/fso-with-coolsox:catalogue
         {{- end}}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         resources:

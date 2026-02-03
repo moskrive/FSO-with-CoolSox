@@ -21,9 +21,9 @@ spec:
       containers:
       - name: shipping
         {{- if .Values.shipping.version }}
-        image: coolsoxlab/fso-with-coolsox:shipping-{{.Values.shipping.version}}
+        image: pcharpen/fso-with-coolsox:shipping-{{.Values.shipping.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:shipping
+        image: pcharpen/fso-with-coolsox:shipping
         {{- end }}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         env:

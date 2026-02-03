@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: carts-db
-        image: mongo:5.0.11
+        image: mongo:4.4.7
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         ports:
         - name: mongo

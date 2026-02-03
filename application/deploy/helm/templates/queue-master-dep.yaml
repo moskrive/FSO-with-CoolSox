@@ -21,9 +21,9 @@ spec:
       containers:
       - name: queue-master
         {{- if .Values.queue_master.version }}
-        image: coolsoxlab/fso-with-coolsox:queue-master-{{.Values.queue_master.version}}
+        image: pcharpen/fso-with-coolsox:queue-master-{{.Values.queue_master.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:queue-master
+        image: pcharpen/fso-with-coolsox:queue-master
         {{- end}}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         env:

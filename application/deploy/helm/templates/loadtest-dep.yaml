@@ -18,13 +18,13 @@ spec:
       containers:
       - name: load-test
         {{- if .Values.loadtest.version }}
-        image: coolsoxlab/fso-with-coolsox:load-test-{{.Values.loadtest.version}}
+        image: pcharpen/fso-with-coolsox:load-test-{{.Values.loadtest.version}}
         {{- else }}
-        image: coolsoxlab/fso-with-coolsox:load-test
+        image: pcharpen/fso-with-coolsox:load-test
         {{- end }}
         imagePullPolicy: {{ .Values.kubernetes.imagePullPolicy }}
         command: ["/bin/sh"]
-        args: ["-c", "while true; do locust --host http://front-end -f /config/locustfile.py --users 5 --hatch-rate 5 --headless; done"]
+        args: ["-c", "while true; do locust --host http://front-end -f /config/locustfile.py --users 5 --spawn-rate 5 --headless; done"]
       {{- if .Values.kubernetes.useImageCredentials}}
       imagePullSecrets:
         - name: container-registry-secret
